@@ -1,11 +1,13 @@
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
 require("dotenv").config({ path: "../.env" });
 
-const path = require("node:path");
 const PORT = process.env.APP_PORT;
 
+app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
