@@ -1,14 +1,14 @@
 <%- include("partials/navbar.ejs") %>
 <main>
-  <form class="category-form" action="/newcategory" method="POST">
-    <label for="text">Category Name</label>
-    <input type="text" name="text" id="text" placeholder="Shooter..." />
+  <form class="category-form" action="/new<%=locals.title%>" method="POST">
+    <label for="text"><%=locals.title %> Name</label>
+    <input type="text" name="text" id="text" placeholder="Name..." />
     <input type="submit" value="Submit" />
   </form>
 
   <% if (locals.categories && locals.categories.length > 0) { %>
-  <form class="category-form" action="/deletecategory" method="POST">
-    <label for="select">Delete Category</label>
+  <form class="category-form" action="/delete<%=locals.title%>" method="POST">
+    <label for="select">Delete <%=locals.title %></label>
     <select name="select" id="select">
       <% locals.categories.forEach(category => { %>
       <option value="<%= category.name %>"><%= category.name %></option>
@@ -17,8 +17,8 @@
     <input type="submit" value="Submit" />
   </form>
 
-  <form class="category-form" action="/editcategory" method="POST">
-    <label for="toedit">Category to Edit</label>
+  <form class="category-form" action="/edit<%=locals.title%>" method="POST">
+    <label for="toedit"><%=locals.title %> to Edit</label>
     <select name="toedit" id="toedit">
       <% locals.categories.forEach(category => { %>
       <option value="<%= category.name %>"><%= category.name %></option>

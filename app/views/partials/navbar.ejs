@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/styles/styles.css" />
     <link rel="stylesheet" href="/styles/items.css" />
     <link rel="stylesheet" href="/styles/newcategory.css" />
+    <link rel="stylesheet" href="/styles/newentry.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,7 +14,7 @@
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= locals.title ? locals.title : "Game Shop" %></title>
+    <title><%= locals.title ? `Edit ${locals.title}` : "Game Shop" %></title>
   </head>
   <body>
     <nav>
@@ -22,6 +23,9 @@
         <h3>Game Block</h3>
       </div>
       <ul>
+        <li><a href="/newentry">Create new entry</a></li>
+        <li><a href="/newdeveloper">Edit developers</a></li>
+        <li><a href="/newplatform">Edit platforms</a></li>
         <li><a href="/newcategory">Edit categories</a></li>
         <li><a href="/">Home</a></li>
       </ul>

@@ -1,0 +1,47 @@
+<%- include("partials/navbar.ejs") %>
+<main>
+  <form class="entry-form" action="/newentry" method="POST">
+    <label for="title">Title</label>
+    <input type="text" name="title" id="title" />
+    <label for="platform">Platform</label>
+    <select name="platform" id="platform">
+      <% locals.platforms.forEach(platform => { %>
+      <option value="<%=platform.name%>"><%=platform.name%></option>
+      <% }) %>
+    </select>
+    <label for="developer">Developer</label>
+    <select name="developer" id="developer">
+      <% locals.developers.forEach(developer => { %>
+      <option value="<%=developer.name%>"><%=developer.name%></option>
+      <% }) %>
+    </select>
+    <label for="price">Price</label>
+    <input type="number" name="price" id="price" />
+    <label for="discount">Discount</label>
+    <input type="number" name="discount" id="discount" />
+    <label for="available">Availability</label>
+    <select name="available" id="available">
+      <option value="true">Available</option>
+      <option value="false">Out of stock</option>
+    </select>
+
+    <label for="categories">Category 1</label>
+    <select id="categories1" name="categories1">
+      <% locals.categories.forEach(category => { %>
+      <option value="<%= category.name %>"><%= category.name %></option>
+      <% }) %>
+    </select>
+
+    <label for="categories">Category 2</label>
+    <select id="categories2" name="categories2">
+      <% locals.categories.forEach(category => { %>
+      <option value="<%= category.name %>"><%= category.name %></option>
+      <% }) %>
+    </select>
+
+    <label for="imageurl">Image URL</label>
+    <input type="text" name="imageurl" id="imageurl" />
+    <input type="submit" value="Submit" />
+  </form>
+</main>
+<%- include("partials/footer.ejs") %>

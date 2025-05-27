@@ -4,11 +4,11 @@ async function getAllInventory() {
   const { rows } = await pool.query(`
 SELECT i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name AS platform, d.name AS developer, ARRAY_AGG(c.name ORDER BY c.name) AS categories
 FROM inventory AS i
-JOIN games AS g ON game_id = g.id
-JOIN platforms AS p ON platform_id = p.id
-JOIN developers AS d ON developer_id = d.id
+LEFT JOIN games AS g ON game_id = g.id
+LEFT JOIN platforms AS p ON platform_id = p.id
+LEFT JOIN developers AS d ON developer_id = d.id
 LEFT JOIN game_category AS gc ON gc.game_id = g.id
-JOIN categories AS c ON gc.category_id = c.id
+LEFT JOIN categories AS c ON gc.category_id = c.id
 GROUP BY i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name, d.name;`);
   return rows;
 }
@@ -36,7 +36,7 @@ async function deleteCategory(category) {
 
   if (check.rows.length > 0) {
     await pool.query(
-      `DELETE FROM game_category WHERE category_id = (SELECT id FROM categories WHERE name = $1)`,
+      `DELETE FROM game_category WHERE category_id IN (SELECT id FROM categories WHERE name = $1)`,
       [category]
     );
   }
@@ -53,10 +53,90 @@ WHERE name = $2`,
   );
 }
 
+async function getAllDevelopers() {
+  const { rows } = await pool.query(`SELECT DISTINCT name FROM developers`);
+  return rows;
+}
+
+async function getAllPlatforms() {
+  const { rows } = await pool.query(`SELECT DISTINCT name FROM platforms`);
+  return rows;
+}
+
+async function insertNewPlatform(platform) {
+  await pool.query(`INSERT INTO platforms (name) VALUES ($1)`, [platform]);
+}
+
+async function deletePlatform(platform) {
+  const check = await pool.query(
+    `SELECT * FROM inventory WHERE platform_id IN (SELECT platforms.id FROM platforms WHERE platforms.name =$1)`,
+    [platform]
+  );
+
+  if (check.rows.length > 0) {
+    await pool.query(
+      `UPDATE inventory SET platform_id = NULL
+     WHERE platform_id IN (SELECT id FROM platforms WHERE name = $1)`,
+      [platform]
+    );
+  }
+
+  await pool.query(`DELETE FROM platforms WHERE name = $1`, [platform]);
+}
+
+async function editPlatform(platformEdited, platformToEdit) {
+  await pool.query(`UPDATE platforms SET name = $1 WHERE name = $2`, [
+    platformEdited,
+    platformToEdit,
+  ]);
+}
+
+async function insertNewDeveloper(developer) {
+  await pool.query(`INSERT INTO developers (name) VALUES ($1)`, [developer]);
+}
+
+async function deleteDeveloper(developer) {
+  const check = await pool.query(
+    `SELECT name FROM games AS g
+JOIN developers AS d ON g.developer_id = d.id
+WHERE name = $1`,
+    [developer]
+  );
+
+  if (check.rows.length > 0) {
+    await pool.query(
+      `
+UPDATE games
+SET developer_id = NULL
+WHERE developer_id IN (
+  SELECT id FROM developers WHERE name = $1
+);`,
+      [developer]
+    );
+  }
+
+  await pool.query(`DELETE FROM developers WHERE name = $1`, [developer]);
+}
+
+async function editDeveloper(developerEdited, developerToEdit) {
+  await pool.query(`UPDATE developers SET name = $1 WHERE name = $2`, [
+    developerEdited,
+    developerToEdit,
+  ]);
+}
+
 module.exports = {
   getAllInventory,
   getAllCategories,
   insertNewCategory,
   deleteCategory,
   editCategory,
+  getAllDevelopers,
+  getAllPlatforms,
+  insertNewPlatform,
+  deletePlatform,
+  editPlatform,
+  insertNewDeveloper,
+  deleteDeveloper,
+  editDeveloper,
 };
