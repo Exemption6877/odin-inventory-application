@@ -21,19 +21,16 @@
       <% if (locals.items && locals.items.length > 0) { %> <%
       locals.items.forEach(item => { %>
       <div class="item">
-        <img
-          src="<%= locals.item.cover_url %>"
-          alt="<%= locals.item.title %> cover"
-        />
-        <h4><%= locals.item.title %></h4>
-        <p><%= locals.item.price %></p>
-        <p><%= locals.item.available ? 'Available' : 'Out of stock' %></p>
+        <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
+        <h4><%= item.title %></h4>
+        <p><%= item.price %></p>
+        <p><%= item.available ? 'Available' : 'Out of stock' %></p>
         <ul>
-          <% locals.item.category.forEach(entry => { %>
+          <% item.categories.forEach(entry => { %>
           <li><%= entry %></li>
           <% }) %>
         </ul>
-        <p><%= locals.item.developer %></p>
+        <p><%= item.developer %></p>
       </div>
       <% }) %> <% } else { %>
       <p>No games found.</p>
