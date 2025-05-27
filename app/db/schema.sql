@@ -78,7 +78,7 @@ VALUES
   (1, 4),
   (2, 3),
   (3, 1),
-  (3, 4);  
+  (3, 4);
 
 INSERT INTO inventory (game_id, platform_id, price, discount, available)
 VALUES
