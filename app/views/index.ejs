@@ -23,7 +23,9 @@
         <% if (locals.items && locals.items.length > 0) { %> <%
         locals.items.forEach(item => { %>
         <div class="item">
+          <% if(item.cover_url.length > 0) { %>
           <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
+          <% }%>
           <div class="item-title">
             <h4><%= item.title %> - <%=item.platform %></h4>
             <p><%= item.developer %></p>

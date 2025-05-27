@@ -44,9 +44,23 @@ async function postDeleteCategory(req, res) {
   }
 }
 
+async function postEditCategory(req, res) {
+  try {
+    const selectedCategory = req.body.toedit;
+    const toResult = req.body.edit;
+
+    await db.editCategory(toResult, selectedCategory);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 module.exports = {
   getAll,
   getNewCategory,
   postNewCategory,
   postDeleteCategory,
+  postEditCategory,
 };

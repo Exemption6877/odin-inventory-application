@@ -23,6 +23,17 @@
       </select>
       <input type="submit" value="submit" />
     </form>
+
+    <form action="/editcategory" method="POST">
+      <label for="toedit">Category to edit: </label>
+      <select name="toedit" id="toedit">
+        <% locals.categories.forEach(category => { %>
+        <option value="<%= category.name %>"><%= category.name %></option>
+        <% }) %>
+      </select>
+      <input type="text" name="edit" id="edit" />
+      <input type="submit" value="submit" />
+    </form>
     <% } %>
   </body>
 </html>
