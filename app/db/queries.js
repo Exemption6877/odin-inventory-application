@@ -32,4 +32,26 @@ VALUES ($1)`,
   );
 }
 
-module.exports = { getAllInventory, getAllCategories, insertNewCategory };
+async function deleteCategory(category) {
+  const check = await pool.query(
+    `SELECT name FROM game_category AS gc
+JOIN categories AS c ON gc.category_id = c.id
+WHERE c.name =$1`,
+    [category]
+  );
+  if (check.rows.length > 0) {
+    await pool.query(
+      `DELETE FROM game_category WHERE category_id = (SELECT id FROM categories WHERE name = $1)`,
+      [category]
+    );
+  }
+
+  await pool.query(`DELETE FROM categories WHERE name = $1`, [category]);
+}
+
+module.exports = {
+  getAllInventory,
+  getAllCategories,
+  insertNewCategory,
+  deleteCategory,
+};

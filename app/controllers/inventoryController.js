@@ -25,8 +25,7 @@ async function getNewCategory(req, res) {
 async function postNewCategory(req, res) {
   try {
     const category = req.body.text;
-    console.log(category);
-    db.insertNewCategory(category);
+    await db.insertNewCategory(category);
     res.redirect("/");
   } catch (err) {
     console.error(err);
@@ -34,4 +33,20 @@ async function postNewCategory(req, res) {
   }
 }
 
-module.exports = { getAll, getNewCategory, postNewCategory };
+async function postDeleteCategory(req, res) {
+  try {
+    const category = req.body.select;
+    await db.deleteCategory(category);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+module.exports = {
+  getAll,
+  getNewCategory,
+  postNewCategory,
+  postDeleteCategory,
+};
