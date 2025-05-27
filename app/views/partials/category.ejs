@@ -2,8 +2,8 @@
   <% if (locals.categories && locals.categories.length > 0) { %> <%
   locals.categories.forEach(category => { %>
   <li><a href="/<%=category.name%>"><%=category.name%></a></li>
-
   <% })} else { %>
   <li>No categories yet! <a href="/newcategory">Create new Category!</a></li>
   <% } %>
+  <li><a href="/newcategory">Create new Category!</a></li>
 </ul>

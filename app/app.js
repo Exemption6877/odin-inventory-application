@@ -15,7 +15,7 @@ app.set("view engine", "ejs");
 
 // Routes
 
-app.get("/", inventoryRouter);
+app.use("/", inventoryRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

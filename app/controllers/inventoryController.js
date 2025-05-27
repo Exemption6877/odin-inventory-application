@@ -12,4 +12,13 @@ async function getAll(req, res) {
   }
 }
 
-module.exports = { getAll };
+async function getNewCategory(req, res) {
+  try {
+    res.render("newcategory");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+module.exports = { getAll, getNewCategory };
