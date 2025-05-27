@@ -2,12 +2,13 @@
   <% if (locals.categories && locals.categories.length > 0) { %> <%
   locals.categories.forEach(category => { %>
   <li>
-    <a href="/category=<%=category.name%>"
-      ><%=category.name%> (<%=category.amount%>)</a
-    >
+    <a href="/category/<%= category.name %>">
+      <%= category.name %> (<%= category.amount %>)
+    </a>
   </li>
-  <% })} else { %>
-  <li>No categories yet! <a href="/newcategory">Create new Category!</a></li>
+  <% }) %> <% } else { %>
+  <li>
+    <a href="/newcategory">No categories yet. Create new category!</a>
+  </li>
   <% } %>
-  <li><a href="/newcategory">Edit Categories</a></li>
 </ul>

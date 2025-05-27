@@ -55,10 +55,14 @@ nav {
   align-items: center;
 }
 
-nav > a {
+nav > ul > li > a {
   color: var(--font-secondary-color);
   font-size: var(--font-link-size);
   font-weight: 800;
+}
+
+nav > ul {
+  gap: 2rem;
 }
 
 .logo-header {
