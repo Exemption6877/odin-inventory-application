@@ -14,13 +14,22 @@ GROUP BY i.price, i.discount, i.available, g.title, g.release_date, g.cover_url,
 }
 
 async function getAllCategories() {
-  const { rows } = await pool.query(`SELECT DISTINCT name, COUNT(name) AS amount
+  const { rows } =
+    await pool.query(`SELECT DISTINCT name, COUNT(gc.game_id) AS amount
 FROM categories AS c
-JOIN game_category AS gc ON c.id = gc.category_id
+LEFT JOIN game_category AS gc ON c.id = gc.category_id
 GROUP by name
 ORDER BY amount Desc
 `);
   return rows;
 }
 
-module.exports = { getAllInventory, getAllCategories };
+async function insertNewCategory(category) {
+  await pool.query(
+    `INSERT INTO categories (name)
+VALUES ($1)`,
+    [category]
+  );
+}
+
+module.exports = { getAllInventory, getAllCategories, insertNewCategory };

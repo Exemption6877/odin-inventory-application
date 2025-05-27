@@ -6,5 +6,6 @@ const inventoryRouter = Router();
 inventoryRouter.get("/", inventoryController.getAll);
 
 inventoryRouter.get("/newcategory", inventoryController.getNewCategory);
+inventoryRouter.post("/newcategory", inventoryController.postNewCategory);
 
 module.exports = inventoryRouter;

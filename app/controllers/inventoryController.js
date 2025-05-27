@@ -14,11 +14,24 @@ async function getAll(req, res) {
 
 async function getNewCategory(req, res) {
   try {
-    res.render("newcategory");
+    const categories = await db.getAllCategories();
+    res.render("newcategory", { categories: categories });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
 }
 
-module.exports = { getAll, getNewCategory };
+async function postNewCategory(req, res) {
+  try {
+    const category = req.body.text;
+    console.log(category);
+    db.insertNewCategory(category);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
+module.exports = { getAll, getNewCategory, postNewCategory };
