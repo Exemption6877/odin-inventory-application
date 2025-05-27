@@ -1,0 +1,35 @@
+.category-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin: 1rem;
+  gap: var(--standart-gap);
+  border-radius: 2ch;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  box-shadow: 0 8px 0 1px #0000001f;
+  width: 600px;
+  margin: auto 0;
+}
+
+.category-form > label {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.category-form > input {
+  border-radius: 1ch;
+  outline: none;
+  width: 50%;
+}
+
+.category-form > select {
+  width: 150px;
+}
+.category-form > input[type="submit"] {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--main-color);
+  color: var(--font-secondary-color);
+  border: none;
+}

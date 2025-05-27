@@ -15,7 +15,10 @@ async function getAll(req, res) {
 async function getNewCategory(req, res) {
   try {
     const categories = await db.getAllCategories();
-    res.render("newcategory", { categories: categories });
+    res.render("newcategory", {
+      title: "Edit Categories",
+      categories: categories,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

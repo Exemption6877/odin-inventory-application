@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create new category</title>
-  </head>
-  <body>
-    <a href="/">Go back</a>
-    <form action="/newcategory" method="POST">
-      <label for="text">Category name: </label>
-      <input type="text" name="text" id="text" />
-      <input type="submit" value="submit" />
-    </form>
+<%- include("partials/navbar.ejs") %>
+<main>
+  <form class="category-form" action="/newcategory" method="POST">
+    <label for="text">Category Name</label>
+    <input type="text" name="text" id="text" placeholder="Shooter..." />
+    <input type="submit" value="Submit" />
+  </form>
 
-    <% if (locals.categories && locals.categories.length > 0) { %>
-    <form action="/deletecategory" method="POST">
-      <label for="select">Delete category: </label>
-      <select name="select" id="select">
-        <% locals.categories.forEach(category => { %>
-        <option value="<%= category.name %>"><%= category.name %></option>
-        <% }) %>
-      </select>
-      <input type="submit" value="submit" />
-    </form>
+  <% if (locals.categories && locals.categories.length > 0) { %>
+  <form class="category-form" action="/deletecategory" method="POST">
+    <label for="select">Delete Category</label>
+    <select name="select" id="select">
+      <% locals.categories.forEach(category => { %>
+      <option value="<%= category.name %>"><%= category.name %></option>
+      <% }) %>
+    </select>
+    <input type="submit" value="Submit" />
+  </form>
 
-    <form action="/editcategory" method="POST">
-      <label for="toedit">Category to edit: </label>
-      <select name="toedit" id="toedit">
-        <% locals.categories.forEach(category => { %>
-        <option value="<%= category.name %>"><%= category.name %></option>
-        <% }) %>
-      </select>
-      <input type="text" name="edit" id="edit" />
-      <input type="submit" value="submit" />
-    </form>
-    <% } %>
-  </body>
-</html>
+  <form class="category-form" action="/editcategory" method="POST">
+    <label for="toedit">Category to Edit</label>
+    <select name="toedit" id="toedit">
+      <% locals.categories.forEach(category => { %>
+      <option value="<%= category.name %>"><%= category.name %></option>
+      <% }) %>
+    </select>
+    <input type="text" name="edit" id="edit" placeholder="Change to..." />
+    <input type="submit" value="Submit" />
+  </form>
+</main>
+<% } %> <%- include("partials/footer.ejs") %>

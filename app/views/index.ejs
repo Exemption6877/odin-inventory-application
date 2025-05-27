@@ -1,59 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="/styles/reset.css" />
-    <link rel="stylesheet" href="/styles/styles.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Shop</title>
-  </head>
-  <body>
-    <%- include("partials/navbar.ejs") %>
-    <main>
-      <%- include("partials/category.ejs") %>
-
-      <h1>Game Shop Index</h1>
-      <div class="items-grid">
-        <% if (locals.items && locals.items.length > 0) { %> <%
-        locals.items.forEach(item => { %>
-        <div class="item">
-          <% if(item.cover_url.length > 0) { %>
-          <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
-          <% }%>
-          <div class="item-title">
-            <h4><%= item.title %> - <%=item.platform %></h4>
-            <p><%= item.developer %></p>
-          </div>
-          <div class="item-store">
-            <% if (item.discount > 0) { %>
-            <p>$<%=item.price * (1-item.discount / 100)%></p>
-            <p class="line-through">$<%= item.price%></p>
-            <% } else { %>
-            <p>$<%=item.price%></p>
-            <% } %>
-            <p class="<%= item.available ? 'avail' : 'notAvail' %>">
-              <%= item.available ? 'Available' : 'Out of stock' %>
-            </p>
-          </div>
-          <p>Categories:</p>
-
-          <ul class="categories">
-            <% item.categories.forEach(entry => { %>
-            <li class="category"><%= entry %></li>
-            <% }) %>
-          </ul>
-        </div>
-        <% }) %> <% } else { %>
-        <p>No games found.</p>
-        <% } %>
+<%- include("partials/navbar.ejs") %>
+<main>
+  <%- include("partials/category.ejs") %>
+  <div class="items-grid">
+    <% if (locals.items && locals.items.length > 0) { %> <%
+    locals.items.forEach(item => { %>
+    <div class="item">
+      <% if(item.cover_url.length > 0) { %>
+      <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
+      <% }%>
+      <div class="item-title">
+        <h4><%= item.title %> - <%=item.platform %></h4>
+        <p><%= item.developer %></p>
       </div>
-    </main>
-    <%- include("partials/footer.ejs") %>
-  </body>
-</html>
+      <div class="item-store">
+        <% if (item.discount > 0) { %>
+        <p>$<%=item.price * (1-item.discount / 100)%></p>
+        <p class="line-through">$<%= item.price%></p>
+        <% } else { %>
+        <p>$<%=item.price%></p>
+        <% } %>
+        <p class="<%= item.available ? 'avail' : 'notAvail' %>">
+          <%= item.available ? 'Available' : 'Out of stock' %>
+        </p>
+      </div>
+      <p>Categories:</p>
+
+      <ul class="categories">
+        <% item.categories.forEach(entry => { %>
+        <li class="category"><%= entry %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <% }) %> <% } else { %>
+    <p>No games found.</p>
+    <% } %>
+  </div>
+</main>
+<%- include("partials/footer.ejs") %>
