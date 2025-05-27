@@ -16,6 +16,8 @@
   <body>
     <%- include("partials/navbar.ejs") %>
     <main>
+      <%- include("partials/category.ejs") %>
+
       <h1>Game Shop Index</h1>
       <div class="items-grid">
         <% if (locals.items && locals.items.length > 0) { %> <%

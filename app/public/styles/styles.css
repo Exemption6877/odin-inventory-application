@@ -207,3 +207,12 @@ main {
   text-decoration-style: solid;
   text-decoration-thickness: 2px;
 }
+
+/* Category navbar */
+
+.nav-category {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: var(--standart-gap);
+}
