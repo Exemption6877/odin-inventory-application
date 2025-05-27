@@ -10,8 +10,6 @@ JOIN developers AS d ON developer_id = d.id
 LEFT JOIN game_category AS gc ON gc.game_id = g.id
 JOIN categories AS c ON gc.category_id = c.id
 GROUP BY i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name, d.name;`);
-
-  console.log(rows);
   return rows;
 }
 

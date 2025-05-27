@@ -17,24 +17,38 @@
     <%- include("partials/navbar.ejs") %>
     <main>
       <h1>Game Shop Index</h1>
+      <div class="items-grid">
+        <% if (locals.items && locals.items.length > 0) { %> <%
+        locals.items.forEach(item => { %>
+        <div class="item">
+          <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
+          <div class="item-title">
+            <h4><%= item.title %> - <%=item.platform %></h4>
+            <p><%= item.developer %></p>
+          </div>
+          <div class="item-store">
+            <% if (item.discount > 0) { %>
+            <p>$<%=item.price * (1-item.discount / 100)%></p>
+            <p class="line-through">$<%= item.price%></p>
+            <% } else { %>
+            <p>$<%=item.price%></p>
+            <% } %>
+            <p class="<%= item.available ? 'avail' : 'notAvail' %>">
+              <%= item.available ? 'Available' : 'Out of stock' %>
+            </p>
+          </div>
+          <p>Categories:</p>
 
-      <% if (locals.items && locals.items.length > 0) { %> <%
-      locals.items.forEach(item => { %>
-      <div class="item">
-        <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
-        <h4><%= item.title %></h4>
-        <p><%= item.price %></p>
-        <p><%= item.available ? 'Available' : 'Out of stock' %></p>
-        <ul>
-          <% item.categories.forEach(entry => { %>
-          <li><%= entry %></li>
-          <% }) %>
-        </ul>
-        <p><%= item.developer %></p>
+          <ul class="categories">
+            <% item.categories.forEach(entry => { %>
+            <li class="category"><%= entry %></li>
+            <% }) %>
+          </ul>
+        </div>
+        <% }) %> <% } else { %>
+        <p>No games found.</p>
+        <% } %>
       </div>
-      <% }) %> <% } else { %>
-      <p>No games found.</p>
-      <% } %>
     </main>
     <%- include("partials/footer.ejs") %>
   </body>
