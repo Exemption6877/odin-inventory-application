@@ -277,6 +277,17 @@ async function postEditEntry(req, res) {
   }
 }
 
+async function postDeleteEntry(req, res) {
+  try {
+    const entryId = req.params.id;
+    await db.deleteEntry(entryId);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 module.exports = {
   getAll,
   getNewCategory,
@@ -295,4 +306,5 @@ module.exports = {
   postNewEntry,
   getEditEntry,
   postEditEntry,
+  postDeleteEntry,
 };

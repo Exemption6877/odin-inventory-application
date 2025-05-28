@@ -39,5 +39,6 @@ inventoryRouter.post("/newentry", inventoryController.postNewEntry);
 // Existing entries
 inventoryRouter.get("/edit/:id", inventoryController.getEditEntry);
 inventoryRouter.post("/edit/:id", inventoryController.postEditEntry);
+inventoryRouter.post("/delete/:id", inventoryController.postDeleteEntry);
 
 module.exports = inventoryRouter;

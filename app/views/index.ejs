@@ -47,6 +47,9 @@
       <% } else { %>
       <p>No categories chosen.</p>
       <% } %>
+      <form action="/delete/<%=item.id%>" method="POST">
+        <button type="submit" value="submit">Delete</button>
+      </form>
       <a href="/edit/<%=item.id%>">Edit</a>
     </div>
     <% }) %> <% } else { %>

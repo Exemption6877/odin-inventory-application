@@ -251,6 +251,16 @@ async function updateEntry(
   }
 }
 
+// Delete entry
+async function deleteEntry(entryId) {
+  const result = await pool.query(
+    `DELETE FROM inventory
+WHERE id = $1
+RETURNING game_id`,
+    [entryId]
+  );
+}
+
 module.exports = {
   getAllInventory,
   getItemById,
@@ -268,4 +278,5 @@ module.exports = {
   editDeveloper,
   insertNewGame,
   updateEntry,
+  deleteEntry,
 };
