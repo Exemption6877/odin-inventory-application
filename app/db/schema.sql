@@ -1,6 +1,6 @@
 -- Database creation
 
-CREATE DATABASE game_store;
+-- CREATE DATABASE game_store;
 
 CREATE TABLE categories (
 id SERIAL PRIMARY KEY,
