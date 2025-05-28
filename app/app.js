@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 
+const initDb = require("../initDB");
+
 const app = express();
 
 require("dotenv").config({ path: "../.env" });
@@ -18,6 +20,8 @@ app.set("view engine", "ejs");
 
 app.use("/", inventoryRouter);
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+initDb().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+  });
 });
