@@ -2,46 +2,47 @@
 <main>
   <%- include("partials/category.ejs") %>
   <div class="items-grid">
-    <% if (locals.items && locals.items.length> 0) { %> <%
-    locals.items.forEach(item=> { %>
+    <% if (locals.items && locals.items.length > 0) { %> <%
+    locals.items.forEach(item => { %>
     <div class="item">
-      <% if(item.cover_url.length> 0) { %>
+      <% if (item.cover_url != null && item.cover_url.length > 0) { %>
       <img src="<%= item.cover_url %>" alt="<%= item.title %> cover" />
-      <% }%>
+      <% } %>
       <div class="item-title">
         <h4>
-          <% if (item.title && item.title.length > 0) { %> <%= item.title %> <%
-          } else { %> no title listed <% } %> - <% if (item.platform &&
-          item.platform.length > 0) { %> <%= item.platform %> <% } else { %> no
-          platform listed <% } %>
+          <% if (item.title != null && item.title.length > 0) { %> <%=
+          item.title %> <% } else { %> no title listed <% } %> - <% if
+          (item.platform != null && item.platform.length > 0) { %> <%=
+          item.platform %> <% } else { %> no platform listed <% } %>
         </h4>
 
-        <% if (item.developer && item.developer.length> 0) { %>
+        <% if (item.developer != null && item.developer.length > 0) { %>
         <p><%= item.developer %></p>
         <% } else { %>
         <p>No developer listed</p>
         <% } %>
       </div>
       <div class="item-store">
-        <% if (item.price && item.price> 0 && item.discount > 0) { %>
+        <% if (item.price != null && item.price > 0 && item.discount != null &&
+        item.discount > 0) { %>
         <p>$<%= item.price * (1 - item.discount / 100) %></p>
         <p class="line-through">$<%= item.price %></p>
-        <% } else if (item.price===0) { %>
+        <% } else if (item.price === 0) { %>
         <p>Free</p>
-        <% } else if (item.price> 0) { %>
+        <% } else if (item.price != null && item.price > 0) { %>
         <p>$<%= item.price %></p>
-        <% } %>
-
+        <% } %> <% if (item.available != null) { %>
         <p class="<%= item.available ? 'avail' : 'notAvail' %>">
           <%= item.available ? 'Available' : 'Out of stock' %>
         </p>
+        <% } %>
       </div>
       <p>Categories:</p>
-      <% if (item.categories && item.categories.length> 0) { %>
+      <% if (item.categories != null && item.categories.length > 0) { %>
       <ul class="categories">
-        <% { %> <% item.categories.forEach(entry=> { %>
+        <% item.categories.forEach(entry => { %>
         <li class="category"><%= entry %></li>
-        <% }) %> <% } %>
+        <% }) %>
       </ul>
       <% } else { %>
       <p>No categories chosen.</p>

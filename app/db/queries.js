@@ -15,10 +15,10 @@ GROUP BY i.price, i.discount, i.available, g.title, g.release_date, g.cover_url,
 
 async function getAllCategories() {
   const { rows } = await pool.query(`
-SELECT DISTINCT name, COUNT(gc.game_id) AS amount
+SELECT DISTINCT c.id, name, COUNT(gc.game_id) AS amount
 FROM categories AS c
 LEFT JOIN game_category AS gc ON c.id = gc.category_id
-GROUP by name
+GROUP by c.id,name
 ORDER BY amount Desc
 `);
   return rows;
@@ -54,12 +54,12 @@ WHERE name = $2`,
 }
 
 async function getAllDevelopers() {
-  const { rows } = await pool.query(`SELECT DISTINCT name FROM developers`);
+  const { rows } = await pool.query(`SELECT DISTINCT id, name FROM developers`);
   return rows;
 }
 
 async function getAllPlatforms() {
-  const { rows } = await pool.query(`SELECT DISTINCT name FROM platforms`);
+  const { rows } = await pool.query(`SELECT DISTINCT id, name FROM platforms`);
   return rows;
 }
 
@@ -125,6 +125,55 @@ async function editDeveloper(developerEdited, developerToEdit) {
   ]);
 }
 
+// NEW ENTRIES CODE GOES HERE,
+//
+//
+
+async function insertNewGame(
+  gameTitle,
+  releaseDate,
+  developerId,
+  coverUrl,
+  platformId,
+  category1,
+  category2,
+  price,
+  discount,
+  availability
+) {
+  const gameIdResult = await pool.query(
+    `
+INSERT INTO games (title, release_date, developer_id, cover_url)
+VALUES ($1, $2, $3, $4)
+RETURNING id;`,
+    [gameTitle, releaseDate, developerId, coverUrl]
+  );
+
+  const gameId = gameIdResult.rows[0].id;
+  if (category1 !== null) {
+    await pool.query(
+      `
+    INSERT INTO game_category (game_id, category_id)
+VALUES ($1, $2)`,
+      [gameId, category1]
+    );
+  }
+  if (category2 !== null) {
+    await pool.query(
+      `
+    INSERT INTO game_category (game_id, category_id)
+VALUES ($1, $2)`,
+      [gameId, category2]
+    );
+  }
+
+  await pool.query(
+    `INSERT INTO inventory (game_id, platform_id, price, discount, available)
+VALUES ($1, $2, $3, $4, $5)`,
+    [gameId, platformId, price, discount, availability]
+  );
+}
+
 module.exports = {
   getAllInventory,
   getAllCategories,
@@ -139,4 +188,5 @@ module.exports = {
   insertNewDeveloper,
   deleteDeveloper,
   editDeveloper,
+  insertNewGame,
 };

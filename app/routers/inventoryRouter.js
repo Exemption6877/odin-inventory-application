@@ -5,6 +5,7 @@ const inventoryRouter = Router();
 
 inventoryRouter.get("/", inventoryController.getAll);
 
+// Category
 inventoryRouter.get("/newcategory", inventoryController.getNewCategory);
 inventoryRouter.post("/newcategories", inventoryController.postNewCategory);
 inventoryRouter.post(
@@ -13,6 +14,7 @@ inventoryRouter.post(
 );
 inventoryRouter.post("/editcategories", inventoryController.postEditCategory);
 
+// Platforms
 inventoryRouter.get("/newplatform", inventoryController.getNewPlatform);
 inventoryRouter.post("/newplatforms", inventoryController.postNewPlatform);
 inventoryRouter.post(
@@ -21,6 +23,7 @@ inventoryRouter.post(
 );
 inventoryRouter.post("/editplatforms", inventoryController.postEditPlatform);
 
+// Developers
 inventoryRouter.get("/newdeveloper", inventoryController.getNewDeveloper);
 inventoryRouter.post("/newdevelopers", inventoryController.postNewDeveloper);
 inventoryRouter.post(
@@ -29,6 +32,8 @@ inventoryRouter.post(
 );
 inventoryRouter.post("/editdevelopers", inventoryController.postEditDeveloper);
 
+// Iventory
 inventoryRouter.get("/newentry", inventoryController.getNewEntry);
+inventoryRouter.post("/newentry", inventoryController.postNewEntry);
 
 module.exports = inventoryRouter;

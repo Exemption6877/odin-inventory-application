@@ -176,6 +176,45 @@ async function postEditDeveloper(req, res) {
   }
 }
 
+//New Inventory
+async function postNewEntry(req, res) {
+  try {
+    const title = req.body.title || null;
+    const date = req.body.date || null;
+    const developer = req.body.developer ? Number(req.body.developer) : null;
+    const coverUrl = req.body.imageurl || null;
+    const platform = req.body.platform ? Number(req.body.platform) : null;
+    const category1 = req.body.categories1
+      ? Number(req.body.categories1)
+      : null;
+    const category2 = req.body.categories2
+      ? Number(req.body.categories2)
+      : null;
+
+    const price = req.body.price ? Number(req.body.price) : null;
+    const discount = req.body.discount ? Number(req.body.discount) : null;
+    const availability = req.body.available || null;
+
+    await db.insertNewGame(
+      title,
+      date,
+      developer,
+      coverUrl,
+      platform,
+      category1,
+      category2,
+      price,
+      discount,
+      availability
+    );
+
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 module.exports = {
   getAll,
   getNewCategory,
@@ -191,4 +230,5 @@ module.exports = {
   postNewDeveloper,
   postDeleteDeveloper,
   postEditDeveloper,
+  postNewEntry,
 };
