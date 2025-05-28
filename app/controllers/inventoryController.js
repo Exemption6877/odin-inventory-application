@@ -237,6 +237,46 @@ async function getEditEntry(req, res) {
   }
 }
 
+async function postEditEntry(req, res) {
+  try {
+    const entryId = req.params.id;
+    const title = req.body.title || null;
+    const date = req.body.date || null;
+    const developer = req.body.developer ? Number(req.body.developer) : null;
+    const coverUrl = req.body.imageurl || null;
+    const platform = req.body.platform ? Number(req.body.platform) : null;
+    const category1 = req.body.categories1
+      ? Number(req.body.categories1)
+      : null;
+    const category2 = req.body.categories2
+      ? Number(req.body.categories2)
+      : null;
+
+    const price = req.body.price ? Number(req.body.price) : null;
+    const discount = req.body.discount ? Number(req.body.discount) : null;
+    const availability = req.body.available || null;
+
+    await db.updateEntry(
+      platform,
+      price,
+      discount,
+      availability,
+      entryId,
+      title,
+      date,
+      developer,
+      coverUrl,
+      category1,
+      category2
+    );
+
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 module.exports = {
   getAll,
   getNewCategory,
@@ -254,4 +294,5 @@ module.exports = {
   postEditDeveloper,
   postNewEntry,
   getEditEntry,
+  postEditEntry,
 };

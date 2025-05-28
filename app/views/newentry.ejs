@@ -1,6 +1,10 @@
 <%- include("partials/navbar.ejs") %>
 <main>
-  <form class="entry-form" action="/newentry" method="POST">
+  <form
+    class="entry-form"
+    action="<%= locals.editedEntry ? '/edit/' + locals.editedEntry.id : '/newentry'%>"
+    method="POST"
+  >
     <label for="title">Title</label>
     <input
       type="text"
