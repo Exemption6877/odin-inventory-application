@@ -1,6 +1,49 @@
 @import url(./styles.css);
 
 /* Items */
+
+.editor-block {
+  display: flex;
+  gap: var(--standart-gap);
+  align-items: center;
+  justify-content: center;
+}
+
+.pass {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--standart-gap);
+}
+
+.pass > button[type="submit"] {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--main-color);
+  color: var(--font-secondary-color);
+  border-radius: 1ch;
+  border: none;
+}
+
+.pass > input {
+  border-radius: 1ch;
+  outline: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.editor {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--main-color);
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+}
+
 .items-grid {
   display: grid;
   width: 100%;

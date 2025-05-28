@@ -47,10 +47,24 @@
       <% } else { %>
       <p>No categories chosen.</p>
       <% } %>
-      <form action="/delete/<%=item.id%>" method="POST">
+      <div class="editor-block">
+        <a class="editor" href="/edit/<%=item.id%>">Edit</a>
+        <button
+          class="editor"
+          onclick="document.querySelector('.delete-<%= item.id %>').classList.toggle('hidden')"
+        >
+          Delete
+        </button>
+      </div>
+      <form
+        class="delete-<%= item.id %> hidden pass"
+        action="/delete/<%=item.id%>"
+        method="POST"
+      >
+        <label for="password">Password</label>
+        <input type="password" name="password" />
         <button type="submit" value="submit">Delete</button>
       </form>
-      <a href="/edit/<%=item.id%>">Edit</a>
     </div>
     <% }) %> <% } else { %>
     <p>No games found.</p>

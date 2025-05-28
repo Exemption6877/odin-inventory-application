@@ -3,6 +3,8 @@
   <form class="category-form" action="/new<%=locals.title%>" method="POST">
     <label for="text"><%=locals.title %> Name</label>
     <input type="text" name="text" id="text" placeholder="Name..." />
+    <label for="password">Password</label>
+    <input type="password" name="password" />
     <input type="submit" value="Submit" />
   </form>
 
@@ -14,6 +16,8 @@
       <option value="<%= category.name %>"><%= category.name %></option>
       <% }) %>
     </select>
+    <label for="password">Password</label>
+    <input type="password" name="password" />
     <input type="submit" value="Submit" />
   </form>
 
@@ -24,7 +28,10 @@
       <option value="<%= category.name %>"><%= category.name %></option>
       <% }) %>
     </select>
+
     <input type="text" name="edit" id="edit" placeholder="Change to..." />
+    <label for="password">Password</label>
+    <input type="password" name="password" />
     <input type="submit" value="Submit" />
   </form>
 </main>

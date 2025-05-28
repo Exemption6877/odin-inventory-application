@@ -1,5 +1,9 @@
 const db = require("../db/queries");
 
+require("dotenv").config({ path: "../.env" });
+
+const PASSWORD = process.env.ADMIN_PASS;
+
 async function getAll(req, res) {
   try {
     const items = await db.getAllInventory();
@@ -28,6 +32,12 @@ async function getNewCategory(req, res) {
 async function postNewCategory(req, res) {
   try {
     const category = req.body.text;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
+
     await db.insertNewCategory(category);
     res.redirect("/");
   } catch (err) {
@@ -39,6 +49,11 @@ async function postNewCategory(req, res) {
 async function postDeleteCategory(req, res) {
   try {
     const category = req.body.select;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
     await db.deleteCategory(category);
     res.redirect("/");
   } catch (err) {
@@ -51,6 +66,11 @@ async function postEditCategory(req, res) {
   try {
     const selectedCategory = req.body.toedit;
     const toResult = req.body.edit;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
 
     await db.editCategory(toResult, selectedCategory);
     res.redirect("/");
@@ -94,6 +114,11 @@ async function getNewPlatform(req, res) {
 async function postNewPlatform(req, res) {
   try {
     const platform = req.body.text;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
     await db.insertNewPlatform(platform);
     res.redirect("/");
   } catch (err) {
@@ -105,6 +130,11 @@ async function postNewPlatform(req, res) {
 async function postDeletePlatform(req, res) {
   try {
     const platform = req.body.select;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
     await db.deletePlatform(platform);
     res.redirect("/");
   } catch (err) {
@@ -117,6 +147,11 @@ async function postEditPlatform(req, res) {
   try {
     const selectedPlatform = req.body.toedit;
     const toResult = req.body.edit;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
 
     await db.editPlatform(toResult, selectedPlatform);
     res.redirect("/");
@@ -144,6 +179,11 @@ async function getNewDeveloper(req, res) {
 async function postNewDeveloper(req, res) {
   try {
     const developer = req.body.text;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
     await db.insertNewDeveloper(developer);
     res.redirect("/");
   } catch (err) {
@@ -155,6 +195,11 @@ async function postNewDeveloper(req, res) {
 async function postDeleteDeveloper(req, res) {
   try {
     const developer = req.body.select;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
     await db.deleteDeveloper(developer);
     res.redirect("/");
   } catch (err) {
@@ -167,6 +212,11 @@ async function postEditDeveloper(req, res) {
   try {
     const selectedDeveloper = req.body.toedit;
     const toResult = req.body.edit;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
 
     await db.editDeveloper(toResult, selectedDeveloper);
     res.redirect("/");
@@ -194,6 +244,11 @@ async function postNewEntry(req, res) {
     const price = req.body.price ? Number(req.body.price) : null;
     const discount = req.body.discount ? Number(req.body.discount) : null;
     const availability = req.body.available || null;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
 
     await db.insertNewGame(
       title,
@@ -255,6 +310,11 @@ async function postEditEntry(req, res) {
     const price = req.body.price ? Number(req.body.price) : null;
     const discount = req.body.discount ? Number(req.body.discount) : null;
     const availability = req.body.available || null;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
 
     await db.updateEntry(
       platform,
@@ -280,6 +340,11 @@ async function postEditEntry(req, res) {
 async function postDeleteEntry(req, res) {
   try {
     const entryId = req.params.id;
+    const password = req.body.password;
+
+    if (password !== PASSWORD) {
+      return res.status(403).send("Forbidden: Incorrect password");
+    }
     await db.deleteEntry(entryId);
     res.redirect("/");
   } catch (err) {
