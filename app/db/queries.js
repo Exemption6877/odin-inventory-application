@@ -2,14 +2,31 @@ const pool = require("./pool");
 
 async function getAllInventory() {
   const { rows } = await pool.query(`
-SELECT i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name AS platform, d.name AS developer, ARRAY_AGG(c.name ORDER BY c.name) AS categories
+SELECT i.id, i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name AS platform, d.name AS developer, ARRAY_AGG(c.name ORDER BY c.name) AS categories
 FROM inventory AS i
 LEFT JOIN games AS g ON game_id = g.id
 LEFT JOIN platforms AS p ON platform_id = p.id
 LEFT JOIN developers AS d ON developer_id = d.id
 LEFT JOIN game_category AS gc ON gc.game_id = g.id
 LEFT JOIN categories AS c ON gc.category_id = c.id
-GROUP BY i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name, d.name;`);
+GROUP BY i.id, i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name, d.name;`);
+  return rows;
+}
+
+async function getItemById(id) {
+  const { rows } = await pool.query(
+    `
+SELECT i.id, i.price, i.discount, i.available, g.title, g.developer_id, g.release_date, g.cover_url, platform_id, p.name AS platform, d.name AS developer, ARRAY_AGG(c.id ORDER BY c.id) AS categories_id, ARRAY_AGG(c.name ORDER BY c.name) AS categories
+FROM inventory AS i
+LEFT JOIN games AS g ON game_id = g.id
+LEFT JOIN platforms AS p ON platform_id = p.id
+LEFT JOIN developers AS d ON developer_id = d.id
+LEFT JOIN game_category AS gc ON gc.game_id = g.id
+LEFT JOIN categories AS c ON gc.category_id = c.id
+WHERE i.id = $1
+GROUP BY i.id, i.price, i.discount, i.available, g.title, g.developer_id, g.release_date, g.cover_url, platform_id, p.name, d.name;`,
+    [id]
+  );
   return rows;
 }
 
@@ -176,6 +193,7 @@ VALUES ($1, $2, $3, $4, $5)`,
 
 module.exports = {
   getAllInventory,
+  getItemById,
   getAllCategories,
   insertNewCategory,
   deleteCategory,

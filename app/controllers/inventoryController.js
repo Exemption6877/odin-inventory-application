@@ -215,6 +215,28 @@ async function postNewEntry(req, res) {
   }
 }
 
+async function getEditEntry(req, res) {
+  try {
+    const entryId = req.params.id;
+    const item = await db.getItemById(entryId);
+    const developers = await db.getAllDevelopers();
+    const platforms = await db.getAllPlatforms();
+    const categories = await db.getAllCategories();
+    console.log(item);
+
+    res.render("newentry", {
+      title: "New Entry",
+      developers: developers,
+      platforms: platforms,
+      categories: categories,
+      editedEntry: item[0],
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 module.exports = {
   getAll,
   getNewCategory,
@@ -231,4 +253,5 @@ module.exports = {
   postDeleteDeveloper,
   postEditDeveloper,
   postNewEntry,
+  getEditEntry,
 };
