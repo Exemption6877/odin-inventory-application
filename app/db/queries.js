@@ -259,6 +259,10 @@ WHERE id = $1
 RETURNING game_id`,
     [entryId]
   );
+  const gameId = result.rows[0].game_id;
+
+  await pool.query(`DELETE FROM game_category WHERE game_id = $1`, [gameId]);
+  await pool.query(`DELETE FROM games WHERE id=$1`, [gameId]);
 }
 
 // Sorters
