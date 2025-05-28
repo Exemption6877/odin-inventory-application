@@ -41,4 +41,7 @@ inventoryRouter.get("/edit/:id", inventoryController.getEditEntry);
 inventoryRouter.post("/edit/:id", inventoryController.postEditEntry);
 inventoryRouter.post("/delete/:id", inventoryController.postDeleteEntry);
 
+// Sort by Category
+inventoryRouter.get("/category/:category", inventoryController.getSortByCategory);
+
 module.exports = inventoryRouter;

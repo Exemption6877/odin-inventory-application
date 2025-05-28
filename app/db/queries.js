@@ -261,6 +261,25 @@ RETURNING game_id`,
   );
 }
 
+// Sorters
+
+async function sortByCategory(category) {
+  const { rows } = await pool.query(
+    `
+SELECT i.id, i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name AS platform, d.name AS developer, ARRAY_AGG(c.name ORDER BY c.name) FILTER (WHERE c.name = $1) AS categories
+FROM inventory AS i
+LEFT JOIN games AS g ON game_id = g.id
+LEFT JOIN platforms AS p ON platform_id = p.id
+LEFT JOIN developers AS d ON developer_id = d.id
+LEFT JOIN game_category AS gc ON gc.game_id = g.id
+LEFT JOIN categories AS c ON gc.category_id = c.id
+WHERE c.name = $1
+GROUP BY i.id, i.price, i.discount, i.available, g.title, g.release_date, g.cover_url, p.name, d.name;`,
+    [category]
+  );
+  return rows;
+}
+
 module.exports = {
   getAllInventory,
   getItemById,
@@ -279,4 +298,5 @@ module.exports = {
   insertNewGame,
   updateEntry,
   deleteEntry,
+  sortByCategory,
 };

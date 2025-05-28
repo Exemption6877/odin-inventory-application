@@ -288,6 +288,19 @@ async function postDeleteEntry(req, res) {
   }
 }
 
+async function getSortByCategory(req, res) {
+  try {
+    const category = req.params.category;
+    const items = await db.sortByCategory(category);
+    const categories = await db.getAllCategories();
+
+    res.render("index", { items: items, categories: categories });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+}
+
 module.exports = {
   getAll,
   getNewCategory,
@@ -307,4 +320,5 @@ module.exports = {
   getEditEntry,
   postEditEntry,
   postDeleteEntry,
+  getSortByCategory,
 };
